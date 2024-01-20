@@ -1,5 +1,7 @@
-import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
 import React from "react";
+import ImageIcon from "./imageIcon";
+import UserIcon from "./UserIcon";
 
 interface ChatFieldProps {
   chatMessages: string[]; // Assuming chatMessage is an array of strings
@@ -29,13 +31,63 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatMessages }) => {
           <GridItem
             colStart={index % 2 == 0 ? 2 : 1}
             rowStart={index + 1}
-            bgColor={index % 2 == 0 ? "teal.600" : "gray.600"}
-            borderRadius="lg"
             mx={1}
           >
-            <Box mx={2} my={3}>
+          
+          {index % 2 == 0 ? (
+            <HStack  spacing={2}>
+              <Box
+                mx={2}
+                my={3}
+                ml="auto"
+                bgColor={index % 2 === 0 ? "teal.600" : "gray.600"}
+                padding="10px"
+                borderRadius="lg"
+                textAlign="center" // Center align the text horizontally
+                display="flex"
+                justifySelf="flex-end"
+                // justifyContent="space-between"
+                // alignItems="center"
+              >
+                <Text textAlign="left" margin="auto" 
+                // justifyContent="center"
+                // alignItems="center"
+                 display="inline-block">
+                  {chatMessage}
+                </Text>
+              </Box>
+
+              <UserIcon 
+                iconSize="20px" 
+                label="Me" 
+                labelFontSize="12px"
+                />
+            </HStack>
+          ) : (
+            <HStack spacing={2}>
+              <ImageIcon 
+                iconSize="sm" 
+                label="NoFriendGPT" 
+                labelFontSize="12px" />
+                
+              <Box
+                mx={2}
+                my={3}
+                bgColor={index % 2 === 0 ? "teal.600" : "gray.600"}
+                padding="10px"
+                borderRadius="lg"
+                textAlign="center" // Center align the text horizontally
+              >
+                <Text textAlign="left" margin="auto" display="inline-block">
+                  {chatMessage}
+                </Text>
+              </Box>
+            </HStack>
+          )}
+
+            {/* <Box mx={2} my={3}>
               {chatMessage}
-            </Box>
+            </Box> */}
           </GridItem>
         ))}
     </Grid>
