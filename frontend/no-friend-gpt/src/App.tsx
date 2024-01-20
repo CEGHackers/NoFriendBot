@@ -8,31 +8,31 @@ import {
   Code,
   Grid,
   theme,
+  GridItem,
+  CSSReset,
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <CSSReset />
+      {/* Ensure the container takes up the entire height of the viewport */}
+      <Box minH="100vh" display="flex" flexDirection="column">
+        {/* Grid to cover the remaining space with two columns */}
+        <Grid templateRows="1fr" templateColumns="30% 70%" gap={4} flex="1">
+          {/* First column */}
+          <GridItem colSpan={1} rowSpan={1} bg="green.200" p={4}>
+            {/* Your content for the first column */}
+            Column 1 Content
+          </GridItem>
+
+          {/* Second column */}
+          <GridItem colSpan={1} rowSpan={1} bg="orange.200" p={4}>
+            {/* Your content for the second column */}
+            Column 2 Content
+          </GridItem>
+        </Grid>
+      </Box>
   </ChakraProvider>
 )
