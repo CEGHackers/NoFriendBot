@@ -1,4 +1,4 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import { Box, Button, HStack, Input } from "@chakra-ui/react";
 import React, { useState, FC } from "react";
 import axios from "axios";
 
@@ -54,15 +54,21 @@ const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
   };
 
   return (
-    <Box p={4}>
-      <Input
-        placeholder="Type your question..."
-        value={question}
-        onChange={handleInputChange}
-      />
-      <Button mt={4} colorScheme="teal" onClick={handleSubmit}>
-        Submit
-      </Button>
+    <Box pt={1} pb={4}>
+      <HStack>
+        <Input
+          placeholder="Type your question..."
+          value={question}
+          onChange={handleInputChange}
+        />
+        <Button
+          colorScheme="green"
+          onClick={handleSubmit}
+          _hover={{ bgColor: "green.400" }}
+        >
+          Submit
+        </Button>
+      </HStack>
     </Box>
   );
 };
