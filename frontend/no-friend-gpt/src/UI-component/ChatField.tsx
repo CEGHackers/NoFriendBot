@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, HStack, Spacer, Text } from "@chakra-ui/react";
 import React from "react";
 import ImageIcon from "./imageIcon";
 import UserIcon from "./UserIcon";
@@ -35,7 +35,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatMessages }) => {
           >
           
           {index % 2 == 0 ? (
-            <HStack  spacing={2}>
+            <HStack  spacing={2} height="100%">
               <Box
                 mx={2}
                 my={3}
@@ -57,18 +57,29 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatMessages }) => {
                 </Text>
               </Box>
 
+              
+
+              <Box display="flex" flexDirection="column" justifyContent="flex-end" height="95%" >
               <UserIcon 
                 iconSize="20px" 
                 label="Me" 
                 labelFontSize="12px"
                 />
+              </Box>
+                
+              
+              
+              
             </HStack>
           ) : (
-            <HStack spacing={2}>
+            <HStack spacing={2} height="95%">
+              <Box display="flex" flexDirection="column" justifyContent="flex-end" height="100%">
               <ImageIcon 
                 iconSize="sm" 
                 label="NoFriendGPT" 
                 labelFontSize="12px" />
+              </Box>
+              
                 
               <Box
                 mx={2}
