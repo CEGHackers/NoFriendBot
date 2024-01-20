@@ -54,7 +54,7 @@ const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
   };
 
   return (
-    <Box p={4}>
+    <Box pt={1} pb={4}>
       <HStack>
         <Input
           placeholder="Type your question..."

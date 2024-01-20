@@ -116,7 +116,7 @@ const Dashboard = () => {
               {/* Your content for the first column, first row */}
               <Flex direction="column" align="center">
                 <ImageIcon
-                  iconSize='xl'
+                  iconSize="xl"
                   label="No Friend GPT"
                   labelFontSize="30px"
                 />
@@ -231,6 +231,10 @@ const Dashboard = () => {
             mt="auto"
             // mb="20px"
             boxSizing="content-box"
+            borderTop="1px solid"
+            borderColor="gray.700"
+            pt={4}
+            mx={4}
           >
             <QuestionTextField
               setChatMessage={setChatMessage}

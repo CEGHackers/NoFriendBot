@@ -9,7 +9,7 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatMessages }) => {
     <Grid
       mt={2}
       mx={1}
-      maxHeight="80vh"
+      maxHeight="86vh"
       templateColumns="repeat(2, 1fr)"
       gap={5}
       pr={2}
