@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { ChakraProvider, Box, Input, Button } from "@chakra-ui/react";
+import { Box, Button, Input } from "@chakra-ui/react";
+import React, { useState, FC } from "react";
 
 interface QuestionTextFieldProps {
-  // Function to handle the submitted question
-  onQuestionSubmit: (question: string) => void;
+  chatMessage: string[]; // Assuming chatMessage is an array of strings
+  setChatMessage: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
-  onQuestionSubmit,
+  chatMessage,
+  setChatMessage,
 }) => {
   // send the data to backend!!!!! @Marcus,@wilson , @Jonathan
   const [question, setQuestion] = useState("");
@@ -17,12 +18,9 @@ const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
   };
   const handleSubmit = () => {
     // Handle the submitted question via onQuestionSubmit
-    console.log("Text response", question);
 
     // Optionally, you can pass the question to a parent component
-    if (onQuestionSubmit) {
-      onQuestionSubmit(question);
-    }
+    setChatMessage([...chatMessage, question]);
 
     // Clear the input field after submission
     setQuestion("");
@@ -41,19 +39,4 @@ const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
     </Box>
   );
 };
-
-// Example usage in a parent component
-const App: React.FC = () => {
-  const handleQuestionSubmit = (question: string) => {
-    // Handle the submitted question in the parent component
-    console.log("Question submitted in parent component:", question);
-  };
-
-  return (
-    <ChakraProvider>
-      <QuestionTextField onQuestionSubmit={handleQuestionSubmit} />
-    </ChakraProvider>
-  );
-};
-
-export default App;
+export default QuestionTextField;
