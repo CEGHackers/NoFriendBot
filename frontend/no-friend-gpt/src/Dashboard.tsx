@@ -116,11 +116,13 @@ const Dashboard = () => {
               {/* Your content for the first column, first row */}
               <Flex direction="column" align="center">
                 <ImageIcon
-                  iconSize="xl"
+                  iconSize="2xl"
                   label="No Friend GPT"
                   labelFontSize="30px"
                 />
-                <Text>Your faithful loner companion</Text>
+                <Text fontSize="lg" fontWeight="semibold">
+                  Argue at your own risk!
+                </Text>
               </Flex>
             </GridItem>
 
