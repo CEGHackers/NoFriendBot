@@ -1,5 +1,6 @@
 import { Box, Button, Input } from "@chakra-ui/react";
 import React, { useState, FC } from "react";
+import axios from "axios";
 
 interface QuestionTextFieldProps {
   chatMessage: string[]; // Assuming chatMessage is an array of strings
@@ -16,13 +17,39 @@ const QuestionTextField: React.FC<QuestionTextFieldProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value);
   };
-  const handleSubmit = () => {
+
+  const getLLMAnswer = async ({ text }: { text: string }) => {
+    setChatMessage([...chatMessage, text]);
+
+    console.log(chatMessage.length);
+
+    if (chatMessage.length == 0) {
+      const res = await axios.post(
+        `http://52.220.229.139/get-initial-response`,
+        {
+          text: text,
+        }
+      );
+      setChatMessage([...chatMessage, text, res.data.response]);
+    } else {
+      const res = await axios.post(`http://52.220.229.139/get-more-response`, {
+        text: text,
+      });
+      setChatMessage([...chatMessage, text, res.data.response]);
+    }
+  };
+
+  const handleSubmit = async () => {
     // Handle the submitted question via onQuestionSubmit
 
     // Optionally, you can pass the question to a parent component
-    setChatMessage([...chatMessage, question]);
+
+    getLLMAnswer({ text: question });
+
+    // await setChatMessage([...chatMessage, question]);
 
     // Clear the input field after submission
+
     setQuestion("");
   };
 

@@ -17,25 +17,28 @@ import QuestionTextField from "./QuestionTextField";
 
 const Dashboard = () => {
   const [chatMessage, setChatMessage] = useState<string[]>([]);
-  
-  const initPrompt: string = "Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content.";
-  const [suggestedPromptText, setSuggestedPromptText] = useState<string>(initPrompt);
 
-  // Placeholder handler for refresh prompt suggestion 
+  const initPrompt: string =
+    "Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content.";
+  const [suggestedPromptText, setSuggestedPromptText] =
+    useState<string>(initPrompt);
+
+  // Placeholder handler for refresh prompt suggestion
   const generateRandomText = () => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let generatedText = '';
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let generatedText = "";
 
     for (let j = 0; j < 5; j++) {
       for (let i = 0; i < 40; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      generatedText += characters[randomIndex];
-    }
-      generatedText += "\n"
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        generatedText += characters[randomIndex];
+      }
+      generatedText += "\n";
     }
     setSuggestedPromptText(generatedText);
   };
-  
+
   // Retrieve suggested prompt from LLM
   const refreshSuggestedPrompt = () => {
     // Get prompt from LLM
@@ -134,9 +137,7 @@ const Dashboard = () => {
                       },
                     }}
                   >
-                    <Text fontSize="sm">
-                      {suggestedPromptText}
-                    </Text>
+                    <Text fontSize="sm">{suggestedPromptText}</Text>
                   </Box>
                 </Box>
 
@@ -184,6 +185,7 @@ const Dashboard = () => {
           flexDirection="column"
         >
           <ChatField chatMessages={chatMessage} />
+
           <Box
             // position="fixed"
             // textAlign="center"

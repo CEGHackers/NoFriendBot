@@ -9,15 +9,33 @@ const ChatField: React.FC<ChatFieldProps> = ({ chatMessages }) => {
     <Grid
       mt={2}
       mx={1}
-      height="100%"
+      maxHeight="80vh"
       templateColumns="repeat(2, 1fr)"
-      templateRows="repeat(8, 1fr)"
-      gap={2}
+      gap={5}
+      pr={2}
+      autoRows="minmax(min-content, max-content)"
+      overflowY="scroll"
+      css={{
+        "&::-webkit-scrollbar": {
+          width: "0.2rem",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "RGBA(255, 255, 255, 0.36)",
+        },
+      }}
     >
       {chatMessages &&
         chatMessages.map((chatMessage: string | null, index: number) => (
-          <GridItem colStart={index % 2 == 0 ? 2 : 1} height="100%">
-            <Box height="100%">{chatMessage}</Box>
+          <GridItem
+            colStart={index % 2 == 0 ? 2 : 1}
+            rowStart={index + 1}
+            bgColor={index % 2 == 0 ? "teal.600" : "gray.600"}
+            borderRadius="lg"
+            mx={1}
+          >
+            <Box mx={2} my={3}>
+              {chatMessage}
+            </Box>
           </GridItem>
         ))}
     </Grid>
