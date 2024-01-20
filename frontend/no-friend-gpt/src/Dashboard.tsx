@@ -14,41 +14,72 @@ import { FaLightbulb, FaRedo, FaPaperPlane } from "react-icons/fa";
 import ChatField from "./UI-component/ChatField";
 import ImageIcon from "./UI-component/imageIcon";
 import QuestionTextField from "./QuestionTextField";
+import axios from "axios";
 
 const Dashboard = () => {
   const [chatMessage, setChatMessage] = useState<string[]>([]);
+
+  const [promptButtonActive, setPromptButtonActive] = useState(true);
 
   const initPrompt: string =
     "Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content. Your text goes here. Replace this with your actual content.";
   const [suggestedPromptText, setSuggestedPromptText] =
     useState<string>(initPrompt);
 
-  // Placeholder handler for refresh prompt suggestion
-  const generateRandomText = () => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let generatedText = "";
+  useEffect(() => {
+    getSuggestedQuery();
+  }, []);
 
-    for (let j = 0; j < 5; j++) {
-      for (let i = 0; i < 40; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        generatedText += characters[randomIndex];
-      }
-      generatedText += "\n";
-    }
-    setSuggestedPromptText(generatedText);
+  useEffect(() => {
+    console.log(suggestedPromptText);
+  }, [suggestedPromptText]);
+
+  const getSuggestedQuery = async () => {
+    const res = await axios.get(`http://52.220.229.139/generate-prompts`);
+    console.log(res.data);
+    setSuggestedPromptText(res.data.msg);
   };
 
-  // Retrieve suggested prompt from LLM
-  const refreshSuggestedPrompt = () => {
-    // Get prompt from LLM
-    // prompt = "some string from LLM";
-    // setSuggestedPromptText(prompt);
+  const getLLMAnswer = async ({ text }: { text: string }) => {
+    setChatMessage([...chatMessage, text]);
+
+    console.log(chatMessage.length);
+
+    if (chatMessage.length == 0) {
+      const res = await axios.post(
+        `http://52.220.229.139/get-initial-response`,
+        {
+          text: text,
+        }
+      );
+      setChatMessage([...chatMessage, text, res.data.response]);
+    } else {
+      const res = await axios.post(`http://52.220.229.139/get-more-response`, {
+        text: text,
+      });
+      setChatMessage([...chatMessage, text, res.data.response]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // Handle the submitted question via onQuestionSubmit
+
+    // Optionally, you can pass the question to a parent component
+
+    getLLMAnswer({ text: suggestedPromptText });
+
+    getSuggestedQuery();
   };
 
   useEffect(() => {
     console.log(chatMessage);
   }, [chatMessage]);
+
+  const regenerateSuggestedPrompt = async () => {
+    const res = await axios.get(`http://52.220.229.139/generate-prompts`);
+    console.log(res.data);
+    setSuggestedPromptText(res.data.msg);
+  };
 
   return (
     <Box
@@ -116,7 +147,7 @@ const Dashboard = () => {
               justifyContent="center"
               alignItems="flex-start"
             >
-              <HStack height="100%">
+              <HStack height="100%" width="100%">
                 <Box
                   bg="gray.700" // Set the background color
                   borderRadius="md" // Apply border-radius for rounded edges
@@ -124,11 +155,14 @@ const Dashboard = () => {
                   py={1}
                   marginLeft="2"
                   height="60%"
+                  width="100%"
                 >
                   <Box
                     height="100%"
                     overflowY="scroll"
                     css={{
+                      width: "100%",
+                      minWidth: "100%",
                       "&::-webkit-scrollbar": {
                         width: "0.2rem",
                       },
@@ -137,7 +171,9 @@ const Dashboard = () => {
                       },
                     }}
                   >
-                    <Text fontSize="sm">{suggestedPromptText}</Text>
+                    <Text fontSize="sm" width="100%">
+                      {suggestedPromptText || " "}
+                    </Text>
                   </Box>
                 </Box>
 
@@ -148,7 +184,9 @@ const Dashboard = () => {
                     bg="orange.400" // Set the background color directly on the IconButton
                     rounded="md" // Apply border-radius to achieve a circular shape
                     aria-label={""}
-                    onClick={generateRandomText}
+                    onClick={regenerateSuggestedPrompt}
+                    disabled={!promptButtonActive}
+                    _hover={{ bgColor: "orange.300" }}
                   />
                   <IconButton
                     icon={
@@ -158,6 +196,8 @@ const Dashboard = () => {
                     bg="green.300" // Set the background color directly on the IconButton
                     rounded="md" // Apply border-radius to achieve a circular shape
                     aria-label={""}
+                    onClick={handleSubmit}
+                    _hover={{ bgColor: "green.200" }}
                   />
                 </VStack>
               </HStack>
