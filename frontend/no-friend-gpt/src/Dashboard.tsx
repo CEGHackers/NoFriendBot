@@ -158,7 +158,7 @@ const Dashboard = () => {
                 >
                   <Box
                     height="100%"
-                    overflowY="scroll"
+                    overflowY="auto"
                     css={{
                       width: "100%",
                       minWidth: "100%",
