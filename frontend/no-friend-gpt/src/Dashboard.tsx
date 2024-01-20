@@ -116,8 +116,7 @@ const Dashboard = () => {
               {/* Your content for the first column, first row */}
               <Flex direction="column" align="center">
                 <ImageIcon
-                  url="https://static.wikia.nocookie.net/steven-he/images/0/0e/StevenHeAvatar.jpg"
-                  iconSize="125px"
+                  iconSize='xl'
                   label="No Friend GPT"
                   labelFontSize="30px"
                 />
