@@ -8,12 +8,12 @@ import {
   VStack,
   Code,
   Grid,
-  theme,
   GridItem,
   CSSReset,
   Flex,
   IconButton,
   HStack,
+  extendTheme,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import ImageIcon from "./UI-component/imageIcon";
@@ -26,6 +26,13 @@ import {
 } from "react-icons/fa";
 import ChatField from "./UI-component/ChatField";
 import Dashboard from "./Dashboard";
+
+const theme = extendTheme({
+  config: {
+    initialColorMode: "dark", // Set default color mode to dark
+    useSystemColorMode: false, // Set to `true` if you want to use the system color mode setting
+  },
+});
 
 export const App = () => (
   <ChakraProvider theme={theme}>
