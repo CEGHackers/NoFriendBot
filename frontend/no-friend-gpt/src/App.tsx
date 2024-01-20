@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import TextField from "./TextField";
 import {
   ChakraProvider,
@@ -12,8 +12,10 @@ import {
   theme,
   GridItem,
   CSSReset,
-} from "@chakra-ui/react";
-import { ColorModeSwitcher } from "./ColorModeSwitcher";
+  Flex,
+} from "@chakra-ui/react"
+import { ColorModeSwitcher } from "./ColorModeSwitcher"
+import ImageIcon from "./UI-component/imageIcon";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -29,9 +31,16 @@ export const App = () => (
         width="100%"
       >
         {/* First column */}
-        <GridItem colSpan={1} rowSpan={1} bg="green.200" p={4}>
+        <GridItem colSpan={1} rowSpan={1} bg="green.200" p={4}  display="flex" justifyContent="center" alignItems="center">
           {/* Your content for the first column */}
-          Column 1 Content
+          <Flex direction="column" align="center">
+              <ImageIcon
+                url='https://static.wikia.nocookie.net/steven-he/images/0/0e/StevenHeAvatar.jpg'
+                iconSize='125px'
+                label="No Friend GPT"
+                labelFontSize='30px'
+              />
+            </Flex>
         </GridItem>
         {/* Second column */}
         <GridItem
@@ -44,7 +53,6 @@ export const App = () => (
           Column 2 Content
           <Box
             // position="fixed"
-
             // textAlign="center"
             mt="auto"
             mb="20px"
